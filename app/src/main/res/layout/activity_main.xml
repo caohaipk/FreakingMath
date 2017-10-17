@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.wordpress.grayfaces.freakingmath.MainActivity">
+    tools:context="com.wordpress.grayfaces.freakingmath.MainActivity"
+    android:id="@+id/main_layout_root">
     <TextView
         android:id="@+id/main_txtScore"
         android:layout_width="wrap_content"
@@ -38,7 +39,7 @@
             android:textSize="30sp"
             android:textStyle="bold"/>
         <TextView
-            android:id="@+id/main_txtCalculus"
+            android:id="@+id/main_txtOperator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+"

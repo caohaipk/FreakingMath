@@ -10,12 +10,14 @@ import android.widget.TextView;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.akexorcist.roundcornerprogressbar.common.BaseRoundCornerProgressBar;
+import com.wordpress.grayfaces.freakingmath.ui.BackgroundColor;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView txtLeftNumber,txtRightNumber,txtResultNumber, txtScore,txtcalculus;
+    private TextView txtLeftNumber,txtRightNumber,txtResultNumber, txtScore, txtOperators;
     private Button btnTrue,btnFalse;
+    private View layoutRoot;
     private RoundCornerProgressBar progressBar;
     private CountDownTimer countDownTimer;
     @Override
@@ -27,9 +29,10 @@ public class MainActivity extends AppCompatActivity {
     private void setView(){
         txtLeftNumber = (TextView) findViewById(R.id.main_txtLeftNumber);
         txtRightNumber = (TextView) findViewById(R.id.main_txtRightNumber);
-        txtcalculus = (TextView) findViewById(R.id.main_txtCalculus);
+        txtOperators = (TextView) findViewById(R.id.main_txtOperator);
         txtResultNumber = (TextView) findViewById(R.id.main_txtResultNumber);
         txtScore = (TextView) findViewById(R.id.main_txtScore);
+        layoutRoot = findViewById(R.id.main_layout_root);
         btnTrue = (Button) findViewById(R.id.main_btnTrue);
         btnFalse = (Button) findViewById(R.id.main_btnFalse);
         progressBar = (RoundCornerProgressBar) findViewById(R.id.main_processBar_timerCountDown);
@@ -61,20 +64,27 @@ public class MainActivity extends AppCompatActivity {
         });
         initNewQuestion();
     }
+    private void initBackgroundColor(View backGround){
+        BackgroundColor backgroundColor = new BackgroundColor();
+        backGround.setBackgroundColor(Color.parseColor(backgroundColor.getRandomColor()));
+    }
     private void initNewQuestion(){
+        if (Integer.parseInt(txtScore.getText().toString()) % 10 == 0 ) {
+            initBackgroundColor(layoutRoot);
+        }
         Random random = new Random();
         int left = random.nextInt(20) + 1;
         int right = random.nextInt(20) + 1;
         //20 is the maximum and the 1 is our minimum
-        int calculus = random.nextInt(2);
+        int operator = random.nextInt(2);
         int resultNumber = 0;
-        switch (calculus){
+        switch (operator){
             case 0:
-                txtcalculus.setText("+");
+                txtOperators.setText("+");
                 resultNumber = left + right + random.nextInt(2);
                 break;
             case 1:
-                txtcalculus.setText("-");
+                txtOperators.setText("-");
                 resultNumber = left - right + random.nextInt(2);
                 break;
         }
@@ -85,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         setTimerCountdown();
     }
     private void setTimerCountdown(){
-        int time = 10 * 1000;
+        int time = 5 * 1000;
         progressBar.setMax(time);
         progressBar.setProgress(time);
         progressBar.setProgressColor(Color.parseColor("#8BC34A"));
@@ -110,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         int left = Integer.parseInt(txtLeftNumber.getText().toString());
         int right = Integer.parseInt(txtRightNumber.getText().toString());
         int rightResult = 0;
-        switch (txtcalculus.getText().toString()){
+        switch (txtOperators.getText().toString()){
             case "+":
                 rightResult = left + right;
                 break;
