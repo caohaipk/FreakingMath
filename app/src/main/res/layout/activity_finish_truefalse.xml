@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wordpress.grayfaces.freakingmath.truefalse.FinishActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Score"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/truefalse_finish_lbScore" />
+    <TextView
+        android:id="@+id/truefalse_finish_txtScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100d"
+        android:textColor="@color/colorAccent"
+        android:textSize="30sp"
+        android:layout_below="@+id/truefalse_finish_lbScore"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"/>
+
+    <ImageView
+        android:id="@+id/truefalse_finish_btnTryAgain"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:srcCompat="@drawable/ic_replay_arrow"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="110dp"
+        android:contentDescription="TryAgain" />
+</RelativeLayout>

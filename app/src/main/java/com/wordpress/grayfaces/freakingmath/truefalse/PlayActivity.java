@@ -1,46 +1,49 @@
-package com.wordpress.grayfaces.freakingmath;
+package com.wordpress.grayfaces.freakingmath.truefalse;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.akexorcist.roundcornerprogressbar.common.BaseRoundCornerProgressBar;
+import com.wordpress.grayfaces.freakingmath.R;
+import com.wordpress.grayfaces.freakingmath.app.Utility;
 import com.wordpress.grayfaces.freakingmath.ui.BackgroundColor;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class PlayActivity extends AppCompatActivity {
     private TextView txtLeftNumber,txtRightNumber,txtResultNumber, txtScore, txtOperators;
-    private Button btnTrue,btnFalse;
+    private View btnTrue,btnFalse;
     private View layoutRoot;
     private RoundCornerProgressBar progressBar;
     private CountDownTimer countDownTimer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_play_truefalse);
+        Utility.hideNavigationBar(PlayActivity.this,getSupportActionBar());
         setView();
     }
     private void setView(){
-        txtLeftNumber = (TextView) findViewById(R.id.main_txtLeftNumber);
-        txtRightNumber = (TextView) findViewById(R.id.main_txtRightNumber);
-        txtOperators = (TextView) findViewById(R.id.main_txtOperator);
-        txtResultNumber = (TextView) findViewById(R.id.main_txtResultNumber);
-        txtScore = (TextView) findViewById(R.id.main_txtScore);
+        txtLeftNumber = (TextView) findViewById(R.id.truefalse_play_txtLeftNumber);
+        txtRightNumber = (TextView) findViewById(R.id.truefalse_play_txtRightNumber);
+        txtOperators = (TextView) findViewById(R.id.truefalse_play_txtOperator);
+        txtResultNumber = (TextView) findViewById(R.id.truefalse_play_txtResultNumber);
+        txtScore = (TextView) findViewById(R.id.truefalse_play_txtScore);
         layoutRoot = findViewById(R.id.main_layout_root);
-        btnTrue = (Button) findViewById(R.id.main_btnTrue);
-        btnFalse = (Button) findViewById(R.id.main_btnFalse);
-        progressBar = (RoundCornerProgressBar) findViewById(R.id.main_processBar_timerCountDown);
+        btnTrue = findViewById(R.id.truefalse_play_btnTrue);
+        btnFalse = findViewById(R.id.truefalse_play_btnFalse);
+        progressBar = (RoundCornerProgressBar) findViewById(R.id.truefalse_play_processBar_timerCountDown);
         progressBar.setOnProgressChangedListener(new BaseRoundCornerProgressBar.OnProgressChangedListener() {
             @Override
             public void onProgressChanged(int viewId, float progress, boolean isPrimaryProgress, boolean isSecondaryProgress) {
                 int percent = ((int) progress)*100/((int)progressBar.getMax());
-                System.out.println(percent);
                 if(percent<=50){
                     if (percent<=30){
                         progressBar.setProgressColor(Color.parseColor("#f44336"));
@@ -108,8 +111,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                progressBar.setProgress(0);
-                txtScore.setText("0");
+//                progressBar.setProgress(0);
+//                txtScore.setText("0");
+//                initNewQuestion();
+                finishGame();
             }
         };
         countDownTimer.start();
@@ -134,8 +139,16 @@ public class MainActivity extends AppCompatActivity {
             int score = Integer.parseInt(txtScore.getText().toString()) + 1;
             txtScore.setText(String.valueOf(score));
         } else {
-            txtScore.setText("0");
+            //txtScore.setText("0");
+            finishGame();
         }
         initNewQuestion();
+    }
+    private void finishGame(){
+        int score = Integer.parseInt(txtScore.getText().toString());
+        Intent intent = new Intent(PlayActivity.this,FinishActivity.class);
+        intent.putExtra("SCORE",score);
+        startActivity(intent);
+        this.finish();
     }
 }

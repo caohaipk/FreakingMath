@@ -8,7 +8,7 @@ import java.util.Random;
  */
 
 public class BackgroundColor {
-    Color[] listColor;
+    private Color[] listColor;
     public BackgroundColor(){
         initListColor();
     }
