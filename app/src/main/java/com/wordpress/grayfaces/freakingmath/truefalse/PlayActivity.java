@@ -2,16 +2,17 @@ package com.wordpress.grayfaces.freakingmath.truefalse;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.akexorcist.roundcornerprogressbar.common.BaseRoundCornerProgressBar;
 import com.wordpress.grayfaces.freakingmath.R;
+import com.wordpress.grayfaces.freakingmath.app.QuitDialog;
 import com.wordpress.grayfaces.freakingmath.app.Utility;
 import com.wordpress.grayfaces.freakingmath.ui.BackgroundColor;
 
@@ -95,14 +96,14 @@ public class PlayActivity extends AppCompatActivity {
         txtLeftNumber.setText(String.valueOf(left));
         txtRightNumber.setText(String.valueOf(right));
         txtResultNumber.setText(String.valueOf(resultNumber));
-        setTimerCountdown();
-    }
-    private void setTimerCountdown(){
         int time = 5 * 1000;
         progressBar.setMax(time);
         progressBar.setProgress(time);
         progressBar.setProgressColor(Color.parseColor("#8BC34A"));
         progressBar.setProgressBackgroundColor(Color.parseColor("#757575"));
+        setTimerCountdown(time);
+    }
+    private void setTimerCountdown(int time){
         countDownTimer = new CountDownTimer(time,100) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -150,5 +151,28 @@ public class PlayActivity extends AppCompatActivity {
         intent.putExtra("SCORE",score);
         startActivity(intent);
         this.finish();
+    }
+    private void resumeCountDownTimer(CountDownTimer timer, RoundCornerProgressBar progress, int maxTime){
+        int time = maxTime * (int)progress.getProgress() / (int)progress.getMax();
+        setTimerCountdown(time);
+    }
+    @Override
+    public void onBackPressed(){
+        final QuitDialog quitDialog = new QuitDialog();
+        quitDialog.setOnDialogFrmCilckListener(new QuitDialog.OnDialogFragmentClickListener() {
+            @Override
+            public void onOkClicked(QuitDialog dialog) {
+                finishGame();
+            }
+
+            @Override
+            public void onCancelClicked(QuitDialog dialog) {
+                quitDialog.dismiss();
+                resumeCountDownTimer(countDownTimer,progressBar,5*1000);
+            }
+        });
+        countDownTimer.cancel();
+        quitDialog.show(getFragmentManager(),"");
+        //super.onBackPressed();
     }
 }
