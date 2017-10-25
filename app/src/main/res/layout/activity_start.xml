@@ -3,25 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.wordpress.grayfaces.freakingmath.truefalse.StartActivity">
+    android:layout_height="match_parent">
     <TextView
+        android:id="@+id/start_txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TRUE / FALSE"
+        android:text="Multiple Choice"
         android:textSize="36sp"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="150dp" />
     <ImageView
-        android:id="@+id/truefalse_start_btnPlay"
+        android:id="@+id/start_btnPlay"
         android:layout_width="64dp"
         android:layout_height="64dp"
         app:srcCompat="@drawable/ic_play_arrow"
         tools:layout_editor_absoluteY="331dp"
         tools:layout_editor_absoluteX="168dp"
-        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="110dp" />
+        android:background="@drawable/ic_play_arrow"
+        android:contentDescription="ac" />
 </RelativeLayout>

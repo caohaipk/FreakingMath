@@ -1,12 +1,11 @@
-package com.wordpress.grayfaces.freakingmath.truefalse;
+package com.wordpress.grayfaces.freakingmath.multiplechoice;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
@@ -16,31 +15,35 @@ import com.wordpress.grayfaces.freakingmath.app.QuitDialog;
 import com.wordpress.grayfaces.freakingmath.app.Utility;
 import com.wordpress.grayfaces.freakingmath.ui.BackgroundColor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class PlayActivity extends AppCompatActivity {
-    private TextView txtLeftNumber,txtRightNumber,txtResultNumber, txtScore, txtOperators;
-    private View btnTrue,btnFalse;
+    private TextView txtLeftNumber,txtRightNumber, txtScore, txtOperators;
+    private List<TextView> listAnswer;
     private View layoutRoot;
     private RoundCornerProgressBar progressBar;
     private CountDownTimer countDownTimer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_play_truefalse);
+        setContentView(R.layout.activity_play_multiplechoice);
         Utility.hideNavigationBar(PlayActivity.this,getSupportActionBar());
         setView();
     }
     private void setView(){
-        txtLeftNumber = (TextView) findViewById(R.id.truefalse_play_txtLeftNumber);
-        txtRightNumber = (TextView) findViewById(R.id.truefalse_play_txtRightNumber);
-        txtOperators = (TextView) findViewById(R.id.truefalse_play_txtOperator);
-        txtResultNumber = (TextView) findViewById(R.id.truefalse_play_txtResultNumber);
-        txtScore = (TextView) findViewById(R.id.truefalse_play_txtScore);
+        txtLeftNumber = (TextView) findViewById(R.id.multiplechoice_play_txtLeftNumber);
+        txtRightNumber = (TextView) findViewById(R.id.multiplechoice_play_txtRightNumber);
+        txtOperators = (TextView) findViewById(R.id.multiplechoice_play_txtOperator);
+        txtScore = (TextView) findViewById(R.id.multiplechoice_play_txtScore);
         layoutRoot = findViewById(R.id.main_layout_root);
-        btnTrue = findViewById(R.id.truefalse_play_btnTrue);
-        btnFalse = findViewById(R.id.truefalse_play_btnFalse);
-        progressBar = (RoundCornerProgressBar) findViewById(R.id.truefalse_play_processBar_timerCountDown);
+        listAnswer = new ArrayList<>();
+        listAnswer.add((TextView) findViewById(R.id.multiplechoice_play_txtAnswerA));
+        listAnswer.add((TextView) findViewById(R.id.multiplechoice_play_txtAnswerB));
+        listAnswer.add((TextView) findViewById(R.id.multiplechoice_play_txtAnswerC));
+        listAnswer.add((TextView) findViewById(R.id.multiplechoice_play_txtAnswerD));
+        progressBar = (RoundCornerProgressBar) findViewById(R.id.multiplechoice_play_processBar_timerCountDown);
         progressBar.setOnProgressChangedListener(new BaseRoundCornerProgressBar.OnProgressChangedListener() {
             @Override
             public void onProgressChanged(int viewId, float progress, boolean isPrimaryProgress, boolean isSecondaryProgress) {
@@ -54,19 +57,20 @@ public class PlayActivity extends AppCompatActivity {
                 }
             }
         });
-        btnTrue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkTheAnswer(true);
-            }
-        });
-        btnFalse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkTheAnswer(false);
-            }
-        });
+        setChange();
         initNewQuestion();
+    }
+    private void setChange(){
+        for (int i = 0; i < listAnswer.size();i++){
+            final int finalI = i;
+            listAnswer.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int answer = Integer.parseInt(listAnswer.get(finalI).getText().toString());
+                    checkTheAnswer(answer);
+                }
+            });
+        }
     }
     private void initBackgroundColor(View backGround){
         BackgroundColor backgroundColor = new BackgroundColor();
@@ -85,23 +89,44 @@ public class PlayActivity extends AppCompatActivity {
         switch (operator){
             case 0:
                 txtOperators.setText("+");
-                resultNumber = left + right + random.nextInt(2);
+                resultNumber = left + right;
                 break;
             case 1:
                 txtOperators.setText("-");
-                resultNumber = left - right + random.nextInt(2);
+                resultNumber = left - right;
                 break;
         }
 
         txtLeftNumber.setText(String.valueOf(left));
         txtRightNumber.setText(String.valueOf(right));
-        txtResultNumber.setText(String.valueOf(resultNumber));
+        setAnswer(listAnswer,resultNumber);
         int time = 5 * 1000;
         progressBar.setMax(time);
         progressBar.setProgress(time);
         progressBar.setProgressColor(Color.parseColor("#8BC34A"));
         progressBar.setProgressBackgroundColor(Color.parseColor("#757575"));
         setTimerCountdown(time);
+    }
+    private void setAnswer(List<TextView> listAnswer,final int result){
+        Random random = new Random();
+        final int location = random.nextInt(4);
+        System.out.println("loca "+location);
+        System.out.println(result);
+        listAnswer.get(location).setText(String.valueOf(result));
+        int left = location-1;
+        while (left>=0){
+            int rs = Integer.parseInt(listAnswer.get(left+1).getText().toString()) - random.nextInt(2) - 1;
+            System.out.println(rs);
+            listAnswer.get(left).setText(String.valueOf(rs));
+            left--;
+        }
+        int right = location+1;
+        while (right<=3){
+            int rs = Integer.parseInt(listAnswer.get(right-1).getText().toString()) + random.nextInt(2) + 1;
+            System.out.println(rs);
+            listAnswer.get(right).setText(String.valueOf(rs));
+            right++;
+        }
     }
     private void setTimerCountdown(int time){
         countDownTimer = new CountDownTimer(time,100) {
@@ -120,7 +145,7 @@ public class PlayActivity extends AppCompatActivity {
         };
         countDownTimer.start();
     }
-    private void checkTheAnswer(boolean answer){
+    private void checkTheAnswer(int answer){
         countDownTimer.cancel();
         countDownTimer = null;
         int left = Integer.parseInt(txtLeftNumber.getText().toString());
@@ -134,9 +159,7 @@ public class PlayActivity extends AppCompatActivity {
                 rightResult = left - right;
                 break;
         }
-        int result = Integer.parseInt(txtResultNumber.getText().toString());
-        boolean resultAnswer = (result == rightResult);
-        if (answer == resultAnswer){
+        if (answer == rightResult){
             int score = Integer.parseInt(txtScore.getText().toString()) + 1;
             txtScore.setText(String.valueOf(score));
         } else {

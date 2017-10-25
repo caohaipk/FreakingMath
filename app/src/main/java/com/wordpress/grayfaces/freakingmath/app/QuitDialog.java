@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 
 import com.wordpress.grayfaces.freakingmath.R;
 
-import java.util.HashMap;
-
 /**
  * Project FreakingMath
  * Created by Gray on 10/20/2017.
@@ -27,18 +25,7 @@ public class QuitDialog extends DialogFragment {
     public void setOnDialogFrmCilckListener(OnDialogFragmentClickListener listener){
         mOnDialogFrmClickListener = listener;
     }
-    private HashMap<String, String> user=null;
-    // Create an instance of the Dialog with the input
-    public static QuitDialog newInstance(String title, String content) {
-        QuitDialog frag = new QuitDialog();
-        Bundle args = new Bundle();
-        args.putString("title", title);
-        args.putString("content",content);
-        /*args.putString("columnDanhMuc",columnDanhMuc);
-        args.putString("tableTaiSan",columnDanhMuc);*/
-        frag.setArguments(args);
-        return frag;
-    }
+
     // Create a Dialog using default AlertDialog builder , if not inflate custom view in onCreateView
     /*@Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

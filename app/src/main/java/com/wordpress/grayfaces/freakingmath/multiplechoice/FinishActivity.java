@@ -1,4 +1,4 @@
-package com.wordpress.grayfaces.freakingmath.truefalse;
+package com.wordpress.grayfaces.freakingmath.multiplechoice;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,11 @@ import android.widget.TextView;
 
 import com.wordpress.grayfaces.freakingmath.R;
 import com.wordpress.grayfaces.freakingmath.app.Utility;
+
+/**
+ * Project FreakingMath
+ * Created by Gray on 10/24/2017.
+ */
 
 public class FinishActivity extends AppCompatActivity {
     private TextView txtScore;
