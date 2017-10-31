@@ -29,7 +29,7 @@ public class PlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_multiplechoice);
-        Utility.hideNavigationBar(PlayActivity.this,getSupportActionBar());
+        Utility.hideNavigationBar(getSupportActionBar());
         setView();
     }
     private void setView(){
@@ -199,5 +199,9 @@ public class PlayActivity extends AppCompatActivity {
         countDownTimer.cancel();
         quitDialog.show(getFragmentManager(),"");
         //super.onBackPressed();
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
     }
 }

@@ -10,7 +10,7 @@ import android.view.View;
  */
 
 public class Utility {
-    public static void hideNavigationBar(Activity activity, ActionBar actionBar){
+    public static void hideNavigationBar(ActionBar actionBar){
         if (actionBar != null) {
             actionBar.hide();
         }

@@ -17,7 +17,6 @@ import com.wordpress.grayfaces.freakingmath.truefalse.PlayActivity;
  */
 
 public class StartTrueFalse extends Fragment {
-    private View btnPlay;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -25,12 +24,12 @@ public class StartTrueFalse extends Fragment {
         View view = inflater.inflate(R.layout.activity_start, container, false);
         TextView title = (TextView)view.findViewById(R.id.start_txtTitle);
         title.setText("TRUE / FALSE");
-        btnPlay = view.findViewById(R.id.start_btnPlay);
-        setChange();
+        View btnPlay = view.findViewById(R.id.start_btnPlay);
+        setChange(btnPlay);
         return view;
     }
-    private void setChange(){
-        btnPlay.setOnClickListener(new View.OnClickListener() {
+    private void setChange(View play){
+        play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),PlayActivity.class);

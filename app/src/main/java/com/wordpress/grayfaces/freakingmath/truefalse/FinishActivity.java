@@ -16,7 +16,7 @@ public class FinishActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finish_truefalse);
-        Utility.hideNavigationBar(FinishActivity.this, getSupportActionBar());
+        Utility.hideNavigationBar(getSupportActionBar());
         createView();
     }
     private void createView(){

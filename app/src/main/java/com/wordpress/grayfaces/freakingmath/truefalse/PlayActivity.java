@@ -28,7 +28,7 @@ public class PlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_truefalse);
-        Utility.hideNavigationBar(PlayActivity.this,getSupportActionBar());
+        Utility.hideNavigationBar(getSupportActionBar());
         setView();
     }
     private void setView(){

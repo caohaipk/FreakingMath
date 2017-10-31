@@ -16,19 +16,18 @@ import com.wordpress.grayfaces.freakingmath.multiplechoice.PlayActivity;
  */
 
 public class StartMultipleChoice extends Fragment {
-    private View btnPlay;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.activity_start, container, false);
         //((TextView)android.findViewById(R.id.textView)).setText("StartMultipleChoice");
-        btnPlay = view.findViewById(R.id.start_btnPlay);
-        setChange();
+        View btnPlay = view.findViewById(R.id.start_btnPlay);
+        setChange(btnPlay);
         return view;
     }
-    protected void setChange(){
-        btnPlay.setOnClickListener(new View.OnClickListener() {
+    protected void setChange(View play){
+        play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),PlayActivity.class);
